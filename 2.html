@@ -1,0 +1,293 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .input-container {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;  /* Consistent spacing between elements */
+            width: 300px;  /* Fixed width for container */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;  /* Fixed width */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            width: 300px;  /* Fixed width */
+            text-align: center;
+            box-sizing: border-box;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            white-space: pre-line;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 300px;  /* Fixed width */
+            text-align: center;
+            text-align-last: center;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right .7em top 50%;
+            background-size: .65em auto;
+        }
+
+        /* Mobile view styles */
+        @media screen and (max-width: 768px) {
+            body {
+                margin: 10px;
+            }
+            
+            .input-container {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            input[type="text"],
+            select,
+            button {
+                width: 100%;
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container" id="inputContainer">
+        <input type="text" id="uid" placeholder="Enter UID">
+        <select id="region">
+            <option value="ind">India</option>
+            <option value="bd">Bangladesh</option>
+            <option value="br">Brazil</option>
+            <option value="cis">CIS</option>
+            <option value="eu">Europe</option>
+            <option value="id">Indonesia</option>
+            <option value="mea">Middle East & Africa</option>
+            <option value="na">North America</option>
+            <option value="sac">South America - Spanish</option>
+            <option value="pk">Pakistan</option>
+            <option value="sg">Singapore</option>
+            <option value="th">Thailand</option>
+            <option value="tw">Taiwan</option>
+            <option value="us">United States</option>
+            <option value="vn">Vietnam</option>
+        </select>
+        <button id="fetchData">Submit</button>
+    </div>
+    <div id="results">Account information will appear here...</div>
+
+    <script>
+        document.getElementById('fetchData').addEventListener('click', async () => {
+            const uid = document.getElementById('uid').value.trim();
+            const region = document.getElementById('region').value;
+            const resultsDiv = document.getElementById('results');
+            const inputContainer = document.getElementById('inputContainer');
+
+            if (!uid) {
+                resultsDiv.textContent = 'Please enter a valid UID.';
+                return;
+            }
+
+            resultsDiv.textContent = 'Fetching account information...';
+
+            const proxyUrl = 'https://api.allorigins.win/get?url=';
+            const targetUrl = `https://profile-info-main.vercel.app/api?uid=${encodeURIComponent(uid)}®ion=${region}&key=1925045198`;
+            const apiUrl = `${proxyUrl}${encodeURIComponent(targetUrl)}`;
+
+            // Pet ID to Name Mapping
+            const petNames = {
+                1300000001: "Kitty",
+                1300000011: "Mechanical Pup",
+                1300000021: "Night Panther",
+                1300000031: "Detective Panda",
+                1300000041: "Shiba",
+                1300000051: "Spirit Fox",
+                1300000061: "Robo",
+                1300000071: "Poring",
+                1300000081: "Ottero",
+                1300000091: "Falco",
+                1300000101: "Mr. Waggor",
+                1300000111: "Rockie",
+                1300000112: "Beaston",
+                1300000113: "Dreki",
+                1300000114: "Moony",
+                1300000115: "Dr. Beanie",
+                1300000116: "Sensei Tiger",
+                1300000117: "Agent Hop",
+                1300000118: "Yeti",
+                1300000119: "Flash",
+                1300000120: "Zasil",
+                1300000121: "Finn",
+                1300000122: "Hoot",
+                1300000123: "Fang",
+                1300000124: "Arvon",
+                1300000125: "Kactus",
+                1300000126: "Pug"
+            };
+
+            // BR Rank Points to Rank Mapping
+            const getBrRank = (points) => {
+                if (points >= 1000 && points <= 1299) return "Bronze";
+                if (points >= 1300 && points <= 1399) return "Silver I";
+                if (points >= 1400 && points <= 1499) return "Silver II";
+                if (points >= 1500 && points <= 1599) return "Silver III";
+                if (points >= 1600 && points <= 1724) return "Gold I";
+                if (points >= 1725 && points <= 1849) return "Gold II";
+                if (points >= 1850 && points <= 1974) return "Gold III";
+                if (points >= 1975 && points <= 2099) return "Gold IV";
+                if (points >= 2100 && points <= 2224) return "Platinum I";
+                if (points >= 2225 && points <= 2349) return "Platinum II";
+                if (points >= 2350 && points <= 2474) return "Platinum III";
+                if (points >= 2475 && points <= 2599) return "Platinum IV";
+                if (points >= 2600 && points <= 2749) return "Diamond I";
+                if (points >= 2750 && points <= 2899) return "Diamond II";
+                if (points >= 2900 && points <= 3049) return "Diamond III";
+                if (points >= 3050 && points <= 3199) return "Diamond IV";
+                if (points >= 3200 && points <= 3999) return "Heroic";
+                if (points >= 4000 && points <= 6499) return "Elite Heroic";
+                if (points >= 6500 && points <= 7699) return "Master";
+                if (points >= 7700) return "Elite Master";
+                return "Unknown";
+            };
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`Network error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const apiResponse = JSON.parse(data.contents);
+
+                // Extract and format the data
+                const info = apiResponse.AccountInfo;
+                const profile = apiResponse.AccountProfileInfo;
+                const guild = apiResponse.GuildInfo;
+                const pet = apiResponse.petInfo;
+                const social = apiResponse.socialinfo;
+
+                // Helper to convert Unix time to simplified format
+                const formatTimestamp = (timestamp) => {
+                    const date = new Date(timestamp * 1000);
+                    return date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: true
+                    });
+                };
+
+                // Parse Prefer Mode
+                const preferMode = social.AccountPreferMode === 'Prefermode_BR' ? 'Battle Royale' : 
+                                   social.AccountPreferMode === 'Prefermode_CS' ? 'Clash Squad' : 'Unknown';
+
+                // Updated Language Parsing
+                const language = typeof social.AccountLanguage === 'string' ? 
+                    social.AccountLanguage.split('_')[1] : 
+                    `Language Code: ${social.AccountLanguage}`;
+
+                // Get Pet Name from ID
+                const petName = petNames[pet.id] || 'Unknown Pet';
+
+                // Handle empty guild case
+                const guildInfo = guild && Object.keys(guild).length > 0 ? `
+🔰 Guild Information
+╭ Name: ${guild.GuildName}
+├ ID: ${guild.GuildID}
+├ Level: ${guild.GuildLevel}
+├ Members: ${guild.GuildMember}
+╰ Capacity: ${guild.GuildCapacity}` : `
+🔰 Guild Information
+╰ No Guild`;
+
+                const formattedOutput = `╭ Name: ${info.AccountName}
+├ UID: ${info.AccountId}
+├ Likes: ${info.AccountLikes}
+├ Level: ${info.AccountLevel}
+├ Exp: ${info.AccountEXP}
+├ Region: ${info.AccountRegion}
+├ Honor Score: ${apiResponse.creditScoreInfo.creditScore}
+├ Current BR Rank: ${getBrRank(info.BrRankPoint)}
+├ BR Rank Point: ${info.BrRankPoint}
+├ CS Rank Point: ${info.CsRankPoint}
+├ Account Created On: ${formatTimestamp(info.AccountCreateTime)}
+├ Last Login: ${formatTimestamp(info.AccountLastLogin)}
+├ Account Prefer Mode: ${preferMode}
+├ Language: ${language}
+╰ Bio: ${social.AccountSignature}
+
+╭ Booyah Pass Premium: ${info.hasElitePass ? 'Active' : 'Inactive'}
+╰ Booyah Pass Level: ${info.AccountBPBadges}
+
+🐾 Pet Information
+╭ Name: ${petName}
+├ Level: ${pet.level}
+├ Exp: ${pet.exp}
+├ Star Marked: ${pet.isSelected ? 'Yes' : 'No'}
+╰ Selected: ${pet.isSelected ? 'Yes' : 'No'}
+${guildInfo}
+
+Current Version: ${info.ReleaseVersion}`;
+
+                resultsDiv.textContent = formattedOutput;
+                
+                // Hide the input container after successful result
+                inputContainer.style.display = 'none';
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                resultsDiv.textContent = `Failed to fetch account information. Please check if the correct Region and UID are selected, or try again later.`;
+            }
+        });
+    </script>
+
+</body></html>
